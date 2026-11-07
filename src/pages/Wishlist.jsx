@@ -1,0 +1,6 @@
+import { Heart, ShoppingBag, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { useStore } from '../context/StoreContext.jsx'
+import { formatPrice } from '../utils/currency.js'
+import { Button, EmptyState, Image } from '../components/common.jsx'
+export default function Wishlist(){const {wishlist,toggleWishlist,addToCart}=useStore();return <div className="wrap wishlist-page"><div className="page-intro"><span className="eyebrow">A FEW THINGS YOU LOVE</span><h1>Your saved <em>finds.</em></h1><p>All the good things you’ve tucked away for later.</p></div>{!wishlist.length?<EmptyState icon={Heart} title="Nothing saved, just yet." description="When something catches your eye, save it here for later." action="Browse the shop"/>:<div className="wishlist-grid">{wishlist.map(p=><article className="wishlist-card" key={p.id}><Link to={`/products/${p.id}`}><Image src={p.image} alt={p.name}/></Link><button className="remove-button wishlist-remove" aria-label={`Remove ${p.name} from wishlist`} onClick={()=>toggleWishlist(p)}><Trash2 size={16}/></button><div><span className="product-brand">{p.brand}</span><Link className="product-name" to={`/products/${p.id}`}>{p.name}</Link><strong>{formatPrice(p.price)}</strong><Button onClick={()=>addToCart(p)}><ShoppingBag size={15}/> Add to bag</Button></div></article>)}</div>}</div>}

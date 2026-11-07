@@ -1,0 +1,5 @@
+import { useLocation, Link } from 'react-router-dom'
+import { ArrowRight, Check } from 'lucide-react'
+import { formatPrice } from '../utils/currency.js'
+import { Button } from '../components/common.jsx'
+export default function OrderSuccess(){const {state}=useLocation();let order=state?.order;try{order=order||JSON.parse(sessionStorage.getItem('apnabazaar-last-order'))}catch{}return <div className="wrap success-page"><div className="success-card"><span className="success-mark"><Check size={30}/></span><span className="eyebrow">A LOVELY LITTLE CONFIRMATION</span><h1>All done,<br/><em>{order?.name?.split(' ')[0]||'friend'}.</em></h1><p>Your demo order is ready for its imaginary journey. No real order has been placed and no payment has been processed.</p>{order&&<div className="order-reference"><span>DEMO ORDER REFERENCE</span><strong>{order.reference}</strong><small>{order.items?.length||0} different finds · {formatPrice(order.total||0)}</small></div>}<Button to="/shop">Keep exploring <ArrowRight size={17}/></Button><Link to="/" className="success-home">Back to the bazaar</Link></div></div>}
